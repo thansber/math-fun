@@ -1,0 +1,36 @@
+{
+  "name": "math-fun",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "NODE_ENV=production && npm run clean && mkdir build && rollup -c",
+    "clean": "rm -rf build",
+    "dev": "npm-run-all --parallel serve watch reload",
+    "reload": "browser-sync start --proxy \"localhost:5000\" --files \"build/*\"",
+    "serve": "firebase serve",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "rollup -c -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thansber/math-fun.git"
+  },
+  "author": "Todd Hansberger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thansber/math-fun/issues"
+  },
+  "homepage": "https://github.com/thansber/math-fun#readme",
+  "dependencies": {
+    "lit-element": "^2.0.1"
+  },
+  "devDependencies": {
+    "livereload": "^0.7.0",
+    "npm-run-all": "^4.1.5",
+    "rollup": "^1.1.2",
+    "rollup-plugin-copy": "^0.2.3",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-replace": "^2.1.0"
+  }
+}
