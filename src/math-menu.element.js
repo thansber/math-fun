@@ -1,22 +1,11 @@
-import { LitElement, html, css } from "lit-element";
+import { LitElement, html, css } from 'lit-element';
+import fullPageStyles from './full-page.styles';
 
 class MathMenu extends LitElement {
   static get styles() {
     return [
+      fullPageStyles,
       css`
-        :host {
-          align-items: center;
-          background-color: #444444;
-          bottom: 0;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          left: 0;
-          position: absolute;
-          right: 0;
-          top: 0;
-        }
-
         .instructions {
           color: white;
           font-size: 150%;
@@ -41,10 +30,22 @@ class MathMenu extends LitElement {
       <p class="instructions">
         Welcome to Fun with Math!
       </p>
-      <button id="toStart">Start the Game</button>
-      <button id="toSettings">Settings</button>
+      <button id="toStart" @click="${() => this.toStart()}">
+        Start the Game
+      </button>
+      <button id="toSettings" @click="${() => this.toSettings()}">
+        Settings
+      </button>
     `;
+  }
+
+  toSettings() {
+    this.dispatchEvent(new CustomEvent('to-settings'));
+  }
+
+  toStart() {
+    this.dispatchEvent(new CustomEvent('to-start'));
   }
 }
 
-customElements.define("math-menu", MathMenu);
+customElements.define('math-menu', MathMenu);

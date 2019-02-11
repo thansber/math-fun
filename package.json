@@ -6,9 +6,10 @@
   "scripts": {
     "build": "NODE_ENV=production && npm run clean && mkdir build && rollup -c",
     "clean": "rm -rf build",
-    "dev": "npm-run-all --parallel serve watch reload",
+    "dev": "npm-run-all --parallel serve-offline watch reload",
     "reload": "browser-sync start --proxy \"localhost:5000\" --files \"build/*\"",
     "serve": "firebase serve",
+    "serve-offline": "serve",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "rollup -c -w"
   },
@@ -31,6 +32,7 @@
     "rollup": "^1.1.2",
     "rollup-plugin-copy": "^0.2.3",
     "rollup-plugin-node-resolve": "^4.0.0",
-    "rollup-plugin-replace": "^2.1.0"
+    "rollup-plugin-replace": "^2.1.0",
+    "serve": "^10.1.2"
   }
 }
