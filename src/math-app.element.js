@@ -5,12 +5,15 @@ import { getSettings } from './settings';
 import './math-menu.element';
 import './math-countdown.element';
 import './math-equation.element';
+import './math-scoreboard.element';
+import './math-timer.element';
 
 class MathApp extends LitElement {
   constructor() {
     super();
-    this.activePage = 'equations';
+    this.activePage = 'menu';
     this.settings = getSettings();
+    this.score = 0;
     this.newEquation();
   }
 
@@ -30,12 +33,24 @@ class MathApp extends LitElement {
   static get properties() {
     return {
       activePage: { type: String },
-      equation: { type: Object }
+      equation: { type: Object },
+      score: { type: Number }
     };
+  }
+
+  correctAnswer() {
+    this.newEquation();
+    this.score++;
+    console.log(`answered ${this.score} correctly`);
   }
 
   firstUpdated() {
     this.countdown = this.shadowRoot.querySelector('math-countdown');
+    this.scoreboard = this.shadowRoot.querySelector('math-scoreboard');
+  }
+
+  gameOver() {
+    debugger;
   }
 
   isActive(page) {
@@ -60,18 +75,27 @@ class MathApp extends LitElement {
       ></math-menu>
       <math-countdown
         class="${classMap({ active: this.isActive('countdown') })}"
-        @countdown-complete="${() => this.toEquations()}"
+        @countdown-complete="${() => this.startGame()}"
       ></math-countdown>
+
       <math-equation
         class="${classMap({ active: this.isActive('equations') })}"
         .equation="${this.equation}"
-      ></math-equation>
+        @correct-answer="${() => this.correctAnswer()}"
+      >
+        <math-scoreboard
+          .score="${this.score}"
+          .time="${this.settings.time}"
+          @time-up="${() => this.gameOver()}"
+        ></math-scoreboard>
+      </math-equation>
     `;
   }
 
-  toEquations() {
+  startGame() {
     this.newEquation();
     this.activePage = 'equations';
+    this.scoreboard.startTimer();
   }
 
   toSettings() {
@@ -81,6 +105,7 @@ class MathApp extends LitElement {
   toStart() {
     this.activePage = 'countdown';
     this.countdown.start();
+    this.score = 0;
   }
 }
 

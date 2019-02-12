@@ -12,6 +12,7 @@ class MathMenu extends LitElement {
 
         button {
           border-radius: 0.5rem;
+          font-family: inherit;
           font-size: 200%;
           margin-bottom: 1.5rem;
           width: 25%;

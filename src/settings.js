@@ -4,6 +4,7 @@ export const getSettings = () => {
       min: 0,
       max: 9,
       operator: 'addition'
-    }
+    },
+    time: 60
   };
 };

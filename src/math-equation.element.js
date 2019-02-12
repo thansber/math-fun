@@ -60,7 +60,7 @@ class MathEquation extends LitElement {
           border-width: 1.5rem 0 0 0;
         }
 
-        input {
+        #answer {
           border: 0;
           box-sizing: border-box;
           font-family: inherit;
@@ -87,6 +87,11 @@ class MathEquation extends LitElement {
       this.result.textContent = isCorrect ? 'Correct!' : 'Incorrect';
       this.result.classList.add('show');
       e.preventDefault();
+
+      if (isCorrect) {
+        this.dispatchEvent(new CustomEvent('correct-answer'));
+        this.answer.value = '';
+      }
     }
   }
 
@@ -96,6 +101,7 @@ class MathEquation extends LitElement {
 
   firstUpdated() {
     this.result = this.shadowRoot.getElementById('result');
+    this.answer = this.shadowRoot.getElementById('answer');
   }
 
   isAnswerCorrect(e) {
@@ -116,10 +122,13 @@ class MathEquation extends LitElement {
           <span>${this.equation.operand2}</span>
         </div>
         <div id="divider"></div>
-        <div id="answer">
-          <input maxlength="2" @keypress="${e => this.checkAnswer(e)}" />
-        </div>
+        <input
+          id="answer"
+          maxlength="2"
+          @keypress="${e => this.checkAnswer(e)}"
+        />
       </section>
+      <slot></slot>
     `;
   }
 }
