@@ -5,6 +5,7 @@ export default (fullPageStyles = css`
     align-items: center;
     background-color: #444444;
     bottom: 0;
+    color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;

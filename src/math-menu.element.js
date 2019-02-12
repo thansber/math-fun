@@ -7,7 +7,6 @@ class MathMenu extends LitElement {
       fullPageStyles,
       css`
         .instructions {
-          color: white;
           font-size: 150%;
         }
 

@@ -12,7 +12,6 @@ class MathCountdown extends LitElement {
       fullPageStyles,
       css`
         .time {
-          color: white;
           opacity: 0;
           position: absolute;
         }
@@ -40,6 +39,10 @@ class MathCountdown extends LitElement {
     ];
   }
 
+  countdownComplete() {
+    this.dispatchEvent(new CustomEvent('countdown-complete'));
+  }
+
   firstUpdated() {
     this.times = this.shadowRoot.querySelectorAll('.time');
   }
@@ -49,7 +52,9 @@ class MathCountdown extends LitElement {
       <div class="time">3</div>
       <div class="time">2</div>
       <div class="time">1</div>
-      <div class="time">GO</div>
+      <div class="time last" @animationend="${() => this.countdownComplete()}">
+        GO
+      </div>
     `;
   }
 

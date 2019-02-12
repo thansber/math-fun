@@ -6,7 +6,8 @@
   "scripts": {
     "build": "NODE_ENV=production && npm run clean && mkdir build && rollup -c",
     "clean": "rm -rf build",
-    "dev": "npm-run-all --parallel serve-offline watch reload",
+    "dev": "npm-run-all --parallel serve watch reload",
+    "dev-offline": "npm-run-all --parallel serve-offline watch reload",
     "reload": "browser-sync start --proxy \"localhost:5000\" --files \"build/*\"",
     "serve": "firebase serve",
     "serve-offline": "serve",
