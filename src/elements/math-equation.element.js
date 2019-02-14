@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
-import fullPageStyles from './full-page.styles';
+import fullPageStyles from '../full-page.styles';
 
 class MathEquation extends LitElement {
   constructor() {

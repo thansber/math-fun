@@ -1,17 +1,17 @@
 import { LitElement, html, css } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
-import { generateEquation } from './equations';
-import { getSettings } from './settings';
-import './math-menu.element';
-import './math-countdown.element';
-import './math-equation.element';
-import './math-scoreboard.element';
-import './math-timer.element';
+import { generateEquation, getSettings } from './utils';
+import './elements';
+
+const COUNTDOWN = 'countdown';
+const EQUATIONS = 'equations';
+const HIGH_SCORE = 'high-score';
+const MENU = 'menu';
 
 class MathApp extends LitElement {
   constructor() {
     super();
-    this.activePage = 'menu';
+    this.activePage = HIGH_SCORE;
     this.settings = getSettings();
     this.score = 0;
     this.newEquation();
@@ -50,11 +50,11 @@ class MathApp extends LitElement {
   }
 
   gameOver() {
-    debugger;
+    this.activePage = HIGH_SCORE;
   }
 
   isActive(page) {
-    return this.activePage === page;
+    return classMap({ active: this.activePage === page });
   }
 
   newEquation() {
@@ -63,23 +63,22 @@ class MathApp extends LitElement {
       this.settings.equationParams.max,
       this.settings.equationParams.operator
     );
-    console.log(this.equation);
   }
 
   render() {
     return html`
       <math-menu
-        class="${classMap({ active: this.isActive('menu') })}"
+        class="${this.isActive(MENU)}"
         @to-start="${() => this.toStart()}"
         @to-settings="${() => this.toSettings()}"
       ></math-menu>
       <math-countdown
-        class="${classMap({ active: this.isActive('countdown') })}"
+        class="${this.isActive(COUNTDOWN)}"
         @countdown-complete="${() => this.startGame()}"
       ></math-countdown>
 
       <math-equation
-        class="${classMap({ active: this.isActive('equations') })}"
+        class="${this.isActive(EQUATIONS)}"
         .equation="${this.equation}"
         @correct-answer="${() => this.correctAnswer()}"
       >
@@ -89,12 +88,14 @@ class MathApp extends LitElement {
           @time-up="${() => this.gameOver()}"
         ></math-scoreboard>
       </math-equation>
+
+      <math-high-score class="${this.isActive(HIGH_SCORE)}"></math-high-score>
     `;
   }
 
   startGame() {
     this.newEquation();
-    this.activePage = 'equations';
+    this.activePage = EQUATIONS;
     this.scoreboard.startTimer();
   }
 
@@ -103,7 +104,7 @@ class MathApp extends LitElement {
   }
 
   toStart() {
-    this.activePage = 'countdown';
+    this.activePage = COUNTDOWN;
     this.countdown.start();
     this.score = 0;
   }

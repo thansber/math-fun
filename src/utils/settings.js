@@ -5,6 +5,6 @@ export const getSettings = () => {
       max: 9,
       operator: 'addition'
     },
-    time: 60
+    time: 3
   };
 };
