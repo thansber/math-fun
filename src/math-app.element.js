@@ -41,7 +41,6 @@ class MathApp extends LitElement {
   correctAnswer() {
     this.newEquation();
     this.score++;
-    console.log(`answered ${this.score} correctly`);
   }
 
   firstUpdated() {
@@ -89,7 +88,10 @@ class MathApp extends LitElement {
         ></math-scoreboard>
       </math-equation>
 
-      <math-high-score class="${this.isActive(HIGH_SCORE)}"></math-high-score>
+      <math-high-score
+        class="${this.isActive(HIGH_SCORE)}"
+        .scores="${this.settings.highScores}"
+      ></math-high-score>
     `;
   }
 
