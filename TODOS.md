@@ -1,5 +1,4 @@
 # TODOs
-
-- store high score, max at 10?
+- game over message?
 - settings page
 - subtraction

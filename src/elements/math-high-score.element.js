@@ -67,7 +67,7 @@ class MathHighScore extends LitElement {
     return html`
       <section id="scores">
         <h1>High Scores</h1>
-        ${this.scores.map(
+        ${this.scores.slice(0, 10).map(
           score =>
             html`
               <div class="row">

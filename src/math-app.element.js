@@ -34,7 +34,8 @@ class MathApp extends LitElement {
     return {
       activePage: { type: String },
       equation: { type: Object },
-      score: { type: Number }
+      score: { type: Number },
+      time: { type: Number, attribute: false }
     };
   }
 
@@ -49,13 +50,18 @@ class MathApp extends LitElement {
     this.scoreboard = this.shadowRoot.querySelector('math-scoreboard');
   }
 
+  gameOver() {
+    this.time = 0;
+    this.toHighScores();
+  }
+
   isActive(page) {
     return classMap({ active: this.activePage === page });
   }
 
   isNewHighScore() {
     return !!this.settings.highScores.filter(
-      highScore => this.score > highScore
+      highScore => this.score > highScore.score
     ).length;
   }
 
@@ -87,8 +93,8 @@ class MathApp extends LitElement {
       >
         <math-scoreboard
           .score="${this.score}"
-          .time="${this.settings.time}"
-          @time-up="${() => this.toHighScores()}"
+          .time="${this.time}"
+          @time-up="${() => this.gameOver()}"
         ></math-scoreboard>
       </math-equation>
 
@@ -102,6 +108,7 @@ class MathApp extends LitElement {
 
   startGame() {
     this.newEquation();
+    this.time = this.settings.time;
     this.activePage = EQUATIONS;
     this.scoreboard.startTimer();
   }

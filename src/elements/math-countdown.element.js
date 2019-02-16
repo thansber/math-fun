@@ -39,8 +39,13 @@ class MathCountdown extends LitElement {
     ];
   }
 
+  cleanup() {
+    this.times.forEach(time => time.classList.remove('zoom'));
+  }
+
   countdownComplete() {
     this.dispatchEvent(new CustomEvent('countdown-complete'));
+    this.cleanup();
   }
 
   firstUpdated() {
