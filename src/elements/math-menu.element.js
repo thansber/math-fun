@@ -15,6 +15,7 @@ class MathMenu extends LitElement {
           font-family: inherit;
           font-size: 200%;
           margin-bottom: 1.5rem;
+          min-width: 10rem;
           width: 25%;
         }
       `
