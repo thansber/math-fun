@@ -11,7 +11,7 @@ const MENU = 'menu';
 class MathApp extends LitElement {
   constructor() {
     super();
-    this.activePage = HIGH_SCORE;
+    this.activePage = MENU;
     this.settings = getSettings();
     this.score = 0;
     this.newEquation();
@@ -45,15 +45,18 @@ class MathApp extends LitElement {
 
   firstUpdated() {
     this.countdown = this.shadowRoot.querySelector('math-countdown');
+    this.highScores = this.shadowRoot.querySelector('math-high-score');
     this.scoreboard = this.shadowRoot.querySelector('math-scoreboard');
-  }
-
-  gameOver() {
-    this.activePage = HIGH_SCORE;
   }
 
   isActive(page) {
     return classMap({ active: this.activePage === page });
+  }
+
+  isNewHighScore() {
+    return !!this.settings.highScores.filter(
+      highScore => this.score > highScore
+    ).length;
   }
 
   newEquation() {
@@ -70,6 +73,7 @@ class MathApp extends LitElement {
         class="${this.isActive(MENU)}"
         @to-start="${() => this.toStart()}"
         @to-settings="${() => this.toSettings()}"
+        @to-high-scores="${() => this.toHighScores()}"
       ></math-menu>
       <math-countdown
         class="${this.isActive(COUNTDOWN)}"
@@ -84,13 +88,14 @@ class MathApp extends LitElement {
         <math-scoreboard
           .score="${this.score}"
           .time="${this.settings.time}"
-          @time-up="${() => this.gameOver()}"
+          @time-up="${() => this.toHighScores()}"
         ></math-scoreboard>
       </math-equation>
 
       <math-high-score
         class="${this.isActive(HIGH_SCORE)}"
         .scores="${this.settings.highScores}"
+        @to-menu="${() => this.toMenu()}"
       ></math-high-score>
     `;
   }
@@ -101,9 +106,18 @@ class MathApp extends LitElement {
     this.scoreboard.startTimer();
   }
 
-  toSettings() {
-    console.log('toSettings');
+  toHighScores() {
+    this.activePage = HIGH_SCORE;
+    if (this.isNewHighScore()) {
+      this.highScores.enterNewScore(this.score);
+    }
   }
+
+  toMenu() {
+    this.activePage = MENU;
+  }
+
+  toSettings() {}
 
   toStart() {
     this.activePage = COUNTDOWN;

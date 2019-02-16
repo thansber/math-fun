@@ -1,4 +1,4 @@
-import { load } from './store';
+import { load, save } from './store';
 
 const EQUATION_PARAMS_KEY = '_equationParams_';
 const HIGH_SCORES_KEY = '_highScores_';
@@ -35,4 +35,8 @@ export const getSettings = () => {
     highScores,
     time
   };
+};
+
+export const saveHighScores = scores => {
+  save(HIGH_SCORES_KEY, scores, { toJson: true });
 };

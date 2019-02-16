@@ -30,13 +30,20 @@ class MathMenu extends LitElement {
       <p class="instructions">
         Welcome to Fun with Math!
       </p>
-      <button id="toStart" @click="${() => this.toStart()}">
+      <button id="toStart" @click="${this.toStart}">
         Start the Game
       </button>
-      <button id="toSettings" @click="${() => this.toSettings()}">
+      <button id="toHighScores" @click="${this.toHighScores}">
+        High Scores
+      </button>
+      <button id="toSettings" @click="${this.toSettings}">
         Settings
       </button>
     `;
+  }
+
+  toHighScores() {
+    this.dispatchEvent(new CustomEvent('to-high-scores'));
   }
 
   toSettings() {

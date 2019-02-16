@@ -102,6 +102,7 @@ class MathEquation extends LitElement {
   firstUpdated() {
     this.result = this.shadowRoot.getElementById('result');
     this.answer = this.shadowRoot.getElementById('answer');
+    this.answer.focus();
   }
 
   isAnswerCorrect(e) {
