@@ -9,6 +9,7 @@ export default (fullPageStyles = css`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    height: 100vh;
     left: 0;
     position: absolute;
     right: 0;

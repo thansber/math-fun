@@ -1,18 +1,18 @@
 import { LitElement, html, css } from 'lit-element';
+import buttonStyles from '../button-styles';
 import fullPageStyles from '../full-page.styles';
 
 class MathMenu extends LitElement {
   static get styles() {
     return [
       fullPageStyles,
+      buttonStyles,
       css`
         .instructions {
           font-size: 150%;
         }
 
         button {
-          border-radius: 0.5rem;
-          font-family: inherit;
           font-size: 200%;
           margin-bottom: 1.5rem;
           min-width: 10rem;

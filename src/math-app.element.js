@@ -7,11 +7,12 @@ const COUNTDOWN = 'countdown';
 const EQUATIONS = 'equations';
 const HIGH_SCORE = 'high-score';
 const MENU = 'menu';
+const SETTINGS = 'settings';
 
 class MathApp extends LitElement {
   constructor() {
     super();
-    this.activePage = MENU;
+    this.activePage = SETTINGS; //MENU;
     this.settings = getSettings();
     this.score = 0;
     this.newEquation();
@@ -103,6 +104,11 @@ class MathApp extends LitElement {
         .scores="${this.settings.highScores}"
         @to-menu="${() => this.toMenu()}"
       ></math-high-score>
+
+      <math-settings
+        class="${this.isActive(SETTINGS)}"
+        @to-menu="${() => this.toMenu()}"
+      ></math-settings>
     `;
   }
 
@@ -124,7 +130,9 @@ class MathApp extends LitElement {
     this.activePage = MENU;
   }
 
-  toSettings() {}
+  toSettings() {
+    this.activePage = SETTINGS;
+  }
 
   toStart() {
     this.activePage = COUNTDOWN;

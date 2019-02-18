@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
+import buttonStyles from '../button-styles';
 import fullPageStyles from '../full-page.styles';
 import { saveHighScores } from '../utils';
 
@@ -11,6 +12,7 @@ class MathHighScore extends LitElement {
   static get styles() {
     return [
       fullPageStyles,
+      buttonStyles,
       css`
         :host {
           font-size: 200%;
@@ -33,15 +35,6 @@ class MathHighScore extends LitElement {
           font-family: inherit;
           font-size: inherit;
           width: 75%;
-        }
-
-        button {
-          border: 0;
-          border-radius: 0.25rem;
-          font-family: inherit;
-          font-size: 100%;
-          margin-top: 2rem;
-          padding: 0.5rem 1rem;
         }
       `
     ];
@@ -88,7 +81,7 @@ class MathHighScore extends LitElement {
       `;
     }
     return html`
-      <button id="toMenu" @click="${this.toMenu}">Back to Menu</button>
+      <math-to-menu></math-to-menu>
     `;
   }
 
@@ -115,10 +108,6 @@ class MathHighScore extends LitElement {
 
   sortByScore(a, b) {
     return b.score - a.score;
-  }
-
-  toMenu() {
-    this.dispatchEvent(new CustomEvent('to-menu'));
   }
 
   updated() {
