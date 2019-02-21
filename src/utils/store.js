@@ -1,4 +1,4 @@
-const loadFromLocalStorage = (key, { toJson, valueIfNotDefined } = options) => {
+const loadFromLocalStorage = (key, { toJson, valueIfNotDefined } = {}) => {
   const value = localStorage.getItem(key);
   if (value === null || value === undefined) {
     return valueIfNotDefined;
@@ -7,7 +7,7 @@ const loadFromLocalStorage = (key, { toJson, valueIfNotDefined } = options) => {
   return toJson ? JSON.parse(value) : value;
 };
 
-const saveToLocalStorage = (key, value, { toJson } = options) => {
+const saveToLocalStorage = (key, value, { toJson } = {}) => {
   const valueToSave = toJson ? JSON.stringify(value) : value;
   localStorage.setItem(key, valueToSave);
 };

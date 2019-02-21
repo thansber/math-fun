@@ -44,6 +44,19 @@ export const getSettings = () => {
   };
 };
 
+export const saveSettings = (operator, min, max, time) => {
+  save(
+    EQUATION_PARAMS_KEY,
+    {
+      operator,
+      min: +min,
+      max: +max
+    },
+    { toJson: true }
+  );
+  save(TIME_KEY, +time);
+};
+
 export const saveHighScores = scores => {
   save(HIGH_SCORES_KEY, scores.slice(0, 10), { toJson: true });
 };
