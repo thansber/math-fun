@@ -1,6 +1,7 @@
 import { load, save } from './store';
 import { Operators } from './equations';
 
+const BG_COLOR_KEY = '_bgColor_';
 const EQUATION_PARAMS_KEY = '_equationParams_';
 const HIGH_SCORES_KEY = '_highScores_';
 const TIME_KEY = '_time_';
@@ -8,21 +9,11 @@ const TIME_KEY = '_time_';
 const DEFAULT_EQUATION_PARAMS = {
   min: 0,
   max: 9,
-  operator: Operators.SUBTRACT
+  operator: Operators.ADD
 };
-const DEFAULT_TIME = 10;
-const DEFAULT_HIGH_SCORES = [
-  { name: 'Todd', score: 123 },
-  { name: 'Todd', score: 122 },
-  { name: 'Todd', score: 121 },
-  { name: 'Todd', score: 120 },
-  { name: 'Madelyn', score: 65 },
-  { name: 'Madelyn', score: 63 },
-  { name: 'Will', score: 34 },
-  { name: 'Will', score: 31 },
-  { name: 'Renee', score: 2 },
-  { name: 'Renee', score: 0 }
-];
+const DEFAULT_TIME = 60;
+const DEFAULT_HIGH_SCORES = [];
+const DEFAULT_BG_COLOR = '444444';
 
 export const getSettings = () => {
   const equationParams = load(EQUATION_PARAMS_KEY, {
@@ -36,15 +27,20 @@ export const getSettings = () => {
   const time = load(TIME_KEY, {
     valueIfNotDefined: DEFAULT_TIME
   });
+  const bgColor = load(BG_COLOR_KEY, {
+    valueIfNotDefined: DEFAULT_BG_COLOR
+  });
 
   return {
+    bgColor,
     equationParams,
     highScores,
     time
   };
 };
 
-export const saveSettings = (operator, min, max, time) => {
+export const saveSettings = (operator, min, max, time, bgColor) => {
+  save(BG_COLOR_KEY, bgColor);
   save(
     EQUATION_PARAMS_KEY,
     {

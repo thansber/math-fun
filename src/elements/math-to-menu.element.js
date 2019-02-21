@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
-import buttonStyles from '../button-styles';
+import { buttonStyles } from '../shared-styles';
 
 class MathToMenu extends LitElement {
   static get styles() {

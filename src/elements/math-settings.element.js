@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit-element';
-import fullPageStyles from '../full-page.styles';
-import buttonStyles from '../button-styles';
-import { getSettings, saveSettings, Operators } from '../utils';
+import { classMap } from 'lit-html/directives/class-map';
+import { bgColorStyle, buttonStyles, fullPageStyles } from '../shared-styles';
+import { colors, getSettings, saveSettings, Operators } from '../utils';
 
 class MathSettings extends LitElement {
   constructor() {
@@ -11,6 +11,7 @@ class MathSettings extends LitElement {
       { label: 'Subtraction', value: Operators.SUBTRACT }
     ];
     this.settings = getSettings();
+    this.selectedBgColor = this.settings.bgColor;
   }
 
   static get styles() {
@@ -44,6 +45,27 @@ class MathSettings extends LitElement {
           margin-bottom: 0.75rem;
         }
 
+        #swatches {
+          display: flex;
+        }
+
+        .swatch {
+          border: 1px solid #777;
+          border-radius: 0.125rem;
+          cursor: pointer;
+          height: 2rem;
+          margin: 0 0.5rem 0.5rem 0;
+          width: 2rem;
+        }
+
+        .swatch:hover {
+          border-color: white;
+        }
+
+        .swatch.selected {
+          box-shadow: 0 0 0.5rem 0.25rem rgba(255, 255, 255, 0.3);
+        }
+
         #actions {
           display: flex;
           flex-direction: row;
@@ -59,7 +81,9 @@ class MathSettings extends LitElement {
   }
 
   static get properties() {
-    return {};
+    return {
+      selectedBgColor: { type: String }
+    };
   }
 
   isOperatorSelected(operator) {
@@ -117,6 +141,22 @@ class MathSettings extends LitElement {
         />
       </section>
 
+      <section>
+        <label>What is your favorite color?</label>
+        <div id="swatches">
+          ${colors.map(
+            c =>
+              html`
+                <div
+                  class="${this.swatchClasses(c)}"
+                  style="${bgColorStyle(c)}"
+                  @click="${() => this.selectColor(c)}"
+                ></div>
+              `
+          )}
+        </div>
+      </section>
+
       <section id="actions">
         <button @click="${this.saveSettings}">Save</button>
         <math-to-menu></math-to-menu>
@@ -129,7 +169,29 @@ class MathSettings extends LitElement {
     const min = this.shadowRoot.getElementById('min').value;
     const max = this.shadowRoot.getElementById('max').value;
     const time = this.shadowRoot.getElementById('time').value;
-    saveSettings(operator, min, max, time);
+    const savedSettings = saveSettings(
+      operator,
+      min,
+      max,
+      time,
+      this.selectedBgColor
+    );
+    this.dispatchEvent(
+      new CustomEvent('saved-settings', {
+        detail: savedSettings
+      })
+    );
+  }
+
+  selectColor(color) {
+    this.selectedBgColor = color;
+  }
+
+  swatchClasses(c) {
+    return classMap({
+      swatch: true,
+      selected: c === this.selectedBgColor
+    });
   }
 }
 

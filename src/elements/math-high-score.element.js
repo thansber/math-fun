@@ -1,6 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
-import buttonStyles from '../button-styles';
-import fullPageStyles from '../full-page.styles';
+import { buttonStyles, fullPageStyles } from '../shared-styles';
 import { saveHighScores } from '../utils';
 
 class MathHighScore extends LitElement {

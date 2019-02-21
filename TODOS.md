@@ -1,4 +1,4 @@
 # TODOs
 
+- toasts
 - game over message?
-- settings page

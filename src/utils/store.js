@@ -10,6 +10,7 @@ const loadFromLocalStorage = (key, { toJson, valueIfNotDefined } = {}) => {
 const saveToLocalStorage = (key, value, { toJson } = {}) => {
   const valueToSave = toJson ? JSON.stringify(value) : value;
   localStorage.setItem(key, valueToSave);
+  return value;
 };
 
 export const load = (key, options) => {

@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
+import { bgColorStyle } from './shared-styles';
 import { generateEquation, getSettings } from './utils';
 import './elements';
 
@@ -21,9 +22,6 @@ class MathApp extends LitElement {
   static get styles() {
     return [
       css`
-        :host {
-        }
-
         .active {
           z-index: 1;
         }
@@ -36,8 +34,13 @@ class MathApp extends LitElement {
       activePage: { type: String },
       equation: { type: Object },
       score: { type: Number },
+      settings: { type: Object, attribute: false },
       time: { type: Number, attribute: false }
     };
+  }
+
+  bgColor() {
+    return styleMap({ backgroundColor: `#${this.settings.bgColor}` });
   }
 
   correctAnswer() {
@@ -78,17 +81,20 @@ class MathApp extends LitElement {
     return html`
       <math-menu
         class="${this.isActive(MENU)}"
+        style="${bgColorStyle(this.settings.bgColor)}"
         @to-start="${() => this.toStart()}"
         @to-settings="${() => this.toSettings()}"
         @to-high-scores="${() => this.toHighScores()}"
       ></math-menu>
       <math-countdown
         class="${this.isActive(COUNTDOWN)}"
+        style="${bgColorStyle(this.settings.bgColor)}"
         @countdown-complete="${() => this.startGame()}"
       ></math-countdown>
 
       <math-equation
         class="${this.isActive(EQUATIONS)}"
+        style="${bgColorStyle(this.settings.bgColor)}"
         .equation="${this.equation}"
         @correct-answer="${() => this.correctAnswer()}"
       >
@@ -101,15 +107,22 @@ class MathApp extends LitElement {
 
       <math-high-score
         class="${this.isActive(HIGH_SCORE)}"
+        style="${bgColorStyle(this.settings.bgColor)}"
         .scores="${this.settings.highScores}"
         @to-menu="${() => this.toMenu()}"
       ></math-high-score>
 
       <math-settings
         class="${this.isActive(SETTINGS)}"
+        style="${bgColorStyle(this.settings.bgColor)}"
+        @saved-settings="${e => this.settingsUpdated()}"
         @to-menu="${() => this.toMenu()}"
       ></math-settings>
     `;
+  }
+
+  settingsUpdated() {
+    this.settings = getSettings();
   }
 
   startGame() {
