@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
 import { buttonStyles, fullPageStyles } from '../shared-styles';
-import { saveHighScores } from '../utils';
+import { saveHighScores, MAX_NUM_HIGH_SCORES } from '../utils';
 
 class MathHighScore extends LitElement {
   constructor() {
@@ -22,6 +22,7 @@ class MathHighScore extends LitElement {
         }
 
         #scores {
+          margin-bottom: 2rem;
           width: 50%;
         }
 
@@ -59,7 +60,7 @@ class MathHighScore extends LitElement {
     return html`
       <section id="scores">
         <h1>High Scores</h1>
-        ${this.scores.slice(0, 10).map(
+        ${this.scores.slice(0, MAX_NUM_HIGH_SCORES).map(
           score =>
             html`
               <div class="row">
@@ -87,7 +88,7 @@ class MathHighScore extends LitElement {
   renderScoreName(highScore) {
     if (highScore.isNew) {
       return html`
-        <input id="newHighScore" placeholder="Enter your name" />
+        <input id="newHighScore" placeholder="Enter your name" maxlength="20" />
       `;
     }
     return html`

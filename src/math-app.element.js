@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 import { bgColorStyle } from './shared-styles';
-import { generateEquation, getSettings } from './utils';
+import { generateEquation, getSettings, MAX_NUM_HIGH_SCORES } from './utils';
 import './elements';
 
 const COUNTDOWN = 'countdown';
@@ -65,9 +65,17 @@ class MathApp extends LitElement {
   }
 
   isNewHighScore() {
-    if (!this.settings.highScores.length) {
+    if (!this.score) {
+      // must score more than 0
+      return false;
+    }
+
+    if (this.settings.highScores.length < MAX_NUM_HIGH_SCORES) {
+      // as long as there aren't enough high scores
       return true;
     }
+
+    // when there are enough high scores, must be more than last one
     return !!this.settings.highScores.filter(
       highScore => this.score > highScore.score
     ).length;

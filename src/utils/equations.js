@@ -26,13 +26,13 @@ export const generateEquation = (min, max, operator) => {
         answer: operand1 + operand2
       };
     case SUBTRACT:
-      operand1 = Math.max(operand1, operand2);
-      operand2 = Math.min(operand1, operand2);
+      const subtractOperand1 = Math.max(operand1, operand2);
+      const subtractOperand2 = Math.min(operand1, operand2);
       return {
-        operand1,
-        operand2,
+        operand1: subtractOperand1,
+        operand2: subtractOperand2,
         operator: '-',
-        answer: operand1 - operand2
+        answer: subtractOperand1 - subtractOperand2
       };
   }
 };

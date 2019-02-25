@@ -15,6 +15,8 @@ const DEFAULT_TIME = 60;
 const DEFAULT_HIGH_SCORES = [];
 const DEFAULT_BG_COLOR = '444444';
 
+export const MAX_NUM_HIGH_SCORES = 10;
+
 export const getSettings = () => {
   const equationParams = load(EQUATION_PARAMS_KEY, {
     toJson: true,
@@ -54,5 +56,5 @@ export const saveSettings = (operator, min, max, time, bgColor) => {
 };
 
 export const saveHighScores = scores => {
-  save(HIGH_SCORES_KEY, scores.slice(0, 10), { toJson: true });
+  save(HIGH_SCORES_KEY, scores.slice(0, MAX_NUM_HIGH_SCORES), { toJson: true });
 };
