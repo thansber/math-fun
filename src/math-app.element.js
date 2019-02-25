@@ -13,7 +13,7 @@ const SETTINGS = 'settings';
 class MathApp extends LitElement {
   constructor() {
     super();
-    this.activePage = SETTINGS; //MENU;
+    this.activePage = MENU;
     this.settings = getSettings();
     this.score = 0;
     this.newEquation();
@@ -50,6 +50,7 @@ class MathApp extends LitElement {
 
   firstUpdated() {
     this.countdown = this.shadowRoot.querySelector('math-countdown');
+    this.equations = this.shadowRoot.querySelector('math-equation');
     this.highScores = this.shadowRoot.querySelector('math-high-score');
     this.scoreboard = this.shadowRoot.querySelector('math-scoreboard');
   }
@@ -64,6 +65,9 @@ class MathApp extends LitElement {
   }
 
   isNewHighScore() {
+    if (!this.settings.highScores.length) {
+      return true;
+    }
     return !!this.settings.highScores.filter(
       highScore => this.score > highScore.score
     ).length;
@@ -123,11 +127,13 @@ class MathApp extends LitElement {
 
   settingsUpdated() {
     this.settings = getSettings();
+    this.toMenu();
   }
 
   startGame() {
     this.newEquation();
     this.time = this.settings.time;
+    this.equations.prep();
     this.activePage = EQUATIONS;
     this.scoreboard.startTimer();
   }

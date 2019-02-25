@@ -109,6 +109,11 @@ class MathEquation extends LitElement {
     return +e.target.value === +this.equation.answer;
   }
 
+  prep() {
+    this.answer.value = '';
+    this.answer.focus();
+  }
+
   render() {
     return html`
       <div id="result" @animationend="${() => this.clearResult()}">
