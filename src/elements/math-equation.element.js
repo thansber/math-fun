@@ -91,6 +91,9 @@ class MathEquation extends LitElement {
       if (isCorrect) {
         this.dispatchEvent(new CustomEvent('correct-answer'));
         this.answer.value = '';
+      } else {
+        this.answer.select();
+        this.answer.focus();
       }
     }
   }

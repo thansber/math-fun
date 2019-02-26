@@ -53,6 +53,14 @@ class MathApp extends LitElement {
     this.equations = this.shadowRoot.querySelector('math-equation');
     this.highScores = this.shadowRoot.querySelector('math-high-score');
     this.scoreboard = this.shadowRoot.querySelector('math-scoreboard');
+    this.toasts = this.shadowRoot.querySelector('math-toasts');
+
+    this.toasts.toast({
+      type: 'info',
+      message:
+        'Once the game starts, enter your answer and press Space or Enter',
+      permanent: true
+    });
   }
 
   gameOver() {
@@ -87,6 +95,10 @@ class MathApp extends LitElement {
       this.settings.equationParams.max,
       this.settings.equationParams.operator
     );
+  }
+
+  onToast(detail) {
+    this.toasts.toast(detail);
   }
 
   render() {
@@ -130,6 +142,8 @@ class MathApp extends LitElement {
         @saved-settings="${e => this.settingsUpdated()}"
         @to-menu="${() => this.toMenu()}"
       ></math-settings>
+
+      <math-toasts></math-toasts>
     `;
   }
 
@@ -149,6 +163,10 @@ class MathApp extends LitElement {
   toHighScores() {
     this.activePage = HIGH_SCORE;
     if (this.isNewHighScore()) {
+      this.toasts.toast({
+        type: 'info',
+        message: 'New high score! Enter your name and click Save'
+      });
       this.highScores.enterNewScore(this.score);
     }
   }
@@ -162,6 +180,7 @@ class MathApp extends LitElement {
   }
 
   toStart() {
+    this.toasts.removeAll();
     this.activePage = COUNTDOWN;
     this.countdown.start();
     this.score = 0;
